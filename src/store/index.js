@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase/app'
+import auth from './auth'
 
 Vue.use(Vuex)
 
@@ -10,9 +11,13 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    async addPersonToQueue({ number }) {
-      const person = await firebase.database().ref(`/queue/${number}`).push({number})
+    async addPersonToQueue({}, { number }) {
+      const person = await firebase.database().ref(`/queue`).push({number})
       return { number, id: person.key }
+    },
+    async deletePersonFromQueue({}, {id}) {
+      const person = await firebase.database().ref(`/queue/${id}`).set(null)
+      console.log(person)
     },
     async fetchQueue() {
       try {
@@ -24,5 +29,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    auth
   }
 })
