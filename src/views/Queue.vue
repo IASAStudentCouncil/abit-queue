@@ -12,11 +12,11 @@
                 :key="q.id"
             >
                 <h4>СТІЛ №{{idx + 1}}</h4>
-                <p class="number">{{q.number | number}}</p>
+                <p class="number">{{q | number(q)}}</p>
             </div>
             <div class="table next mt">
                 <h4>Next</h4>
-                <p class="number">{{next | number}}</p>
+                <p class="number">{{next | number(next)}}</p>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@ export default {
             return this.queue.slice(0, 3)
         },
         next() {
-            return this.queue[0]
+            return this.queue[3] ? this.queue[3] : 0
         }
     },
     mounted() {
