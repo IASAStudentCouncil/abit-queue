@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="admin">
         <h1>ADMIN</h1>
         <div v-if="!allowed">
             <div>
@@ -14,9 +14,9 @@
             <div class="queue">
                 <p
                     v-for="q of queue"
-                    :key="q.id"
+                    :key="q"
                 >
-                    {{q.number}}
+                    {{q}}
                 </p>
             </div>
             <form @submit.prevent="addPersonHandler">
@@ -41,6 +41,12 @@
     </div>
 </template>
 
+<style>
+    .admin{
+        color: black !important;
+    }
+</style>
+
 <script>
 export default {
     name: "Admin",
@@ -52,19 +58,33 @@ export default {
         pass: '',
         login: ''
     }),
+    mounted() {
+        setInterval(() => {
+            this.$emit('update')
+        }, 3000)
+    },
     methods: {
         async tryToLogin() {
+            console.log("try to login")
             const formData = {
                 email: this.login,
                 password: this.pass
             }
 
             try {
-                await this.$store.dispatch('login', formData)
-                this.allowed = true
+                let res = await this.$store.dispatch('login', formData)
+                if(res){
+                    this.allowed = true
+                } else {
+                this.allowed = false
+                this.pass = ''
+                this.login = ''
+                }
+                
             } catch (e) {
                 this.pass = ''
                 this.login = ''
+                throw e
             }
         },
         async addPersonHandler() {
@@ -88,14 +108,14 @@ export default {
             }
 
             try {
-                const id = this.queue.find(q => q.number === this.numToDel).id
-                await this.$store.dispatch('deletePersonFromQueue', { id })
+                await this.$store.dispatch('deletePersonFromQueue', {number: this.numToDel})
                 this.numToDel = 0
                 this.$emit('update')
             } catch (e) {
                 throw e
             }
         }
+    
     }
 }
 </script>

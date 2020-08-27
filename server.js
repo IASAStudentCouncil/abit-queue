@@ -1,21 +1,11 @@
 const express = require('express')
 const path = require('path')
-const firebase = require('firebase')
- 
+const nocache = require('nocache')
+
 const app = express()
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCvnPhjVI_vLWHefcYwVzo-VGZi1x7oQbI",
-    authDomain: "abit-queue.firebaseapp.com",
-    databaseURL: "https://abit-queue.firebaseio.com",
-    projectId: "abit-queue",
-    storageBucket: "abit-queue.appspot.com",
-    messagingSenderId: "642912729314",
-    appId: "1:642912729314:web:d26605bbf8fa3ec8c146bb",
-    measurementId: "G-8FJGSF1204"
-  };
-  // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+
+
 
 app.set('port', 3000)
 
@@ -32,7 +22,75 @@ app.get('/api/queue/', (req, res) => {
         } else {
             arr.push(arr[arr.length - 1] + 1)
         }
+        console.log(arr)
         res.send(`${arr[arr.length - 1]}`)
+    } catch (error) {
+        throw error
+    }
+    
+})
+
+app.post('/api/queue/', (req, res) => {
+    try {
+        if (arr.length === 0) {
+            arr.push(1)
+        } else {
+            arr.push(arr[arr.length - 1] + 1)
+        }
+        console.log(arr)
+        res.send(`${arr[arr.length - 1]}`)
+    } catch (error) {
+        throw error
+    }
+    
+})
+
+app.get('/api/queue-add/', (req, res) => {
+    try {
+        if(!arr.includes(parseInt(req.query.num))){
+            arr.push(parseInt(req.query.num))
+        }
+        console.log(arr)
+        res.send(`${arr}`)
+    } catch (error) {
+        throw error
+    }
+    
+})
+
+app.get('/api/queue-del/', (req, res) => {
+    try {
+        if(arr.includes(parseInt(req.query.num))){
+            let index = arr.indexOf(parseInt(req.query.num))
+            console.log(index)
+            if (index > -1) {
+                arr.splice(index, 1)
+            }
+        }  
+        console.log(arr)
+        res.send(`${arr}`)
+    } catch (error) {
+        throw error
+    }
+    
+})
+
+app.get('/api/queue-fetch/', (req, res) => {
+    try {
+        res.json(arr)
+    } catch (error) {
+        throw error
+    }
+    
+})
+
+app.get('/api/reg/', (req, res) => {
+    try {
+        if(req.query.login === "admin@iasa.kpi" && req.query.pass === "riba_metch"){
+            res.send({'res': '11'})
+        } else {
+            res.send({'res': '00'})
+        }
     } catch (error) {
         throw error
     }
@@ -41,3 +99,8 @@ app.get('/api/queue/', (req, res) => {
 
 app.use('/', express.static(path.join('./dist')))
 app.use('/admin', express.static(path.join('./dist')))
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
+  next()
+})
+app.use(nocache())
