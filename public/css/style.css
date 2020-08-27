@@ -25,7 +25,7 @@ body {
 
 .container {
     height: 100vh;
-    padding: 0 15%;
+    padding: 0 13%;
     background-color: #1D1D1D;
 }
 
@@ -59,7 +59,7 @@ h3 {
     flex-direction: column;
     text-align: center;
     background: url("../img/line_right.svg") 100% 50% no-repeat;
-    width:40%;
+    width: 40%;
 }
 
 .table:nth-last-child(1){
@@ -69,7 +69,7 @@ h3 {
 .table h4 {
     display: flex;
     flex-direction: column;
-    font-size: 55px;
+    font-size: 48px;
     line-height: 65px;
     text-transform: uppercase;
 }
@@ -94,28 +94,24 @@ h3 {
     .table-wrap {
         width: 100%;
         margin-top: 40%;
-        /*position: absolute;*/
-        /*top: 40%;*/
-        /*left: 50%;*/
-        /*transform: translate(-50%, -40%);*/
     }
     .table h4{
-        font-size: 35px;
+        font-size: 32px;
         line-height: 45px;
     }
     .number {
-        font-size: 90px;
+        font-size: 85px;
         line-height: 90px;
     }
 }
 
 @media (max-width: 768px) {
     .table h4{
-        font-size: 30px;
+        font-size: 26px;
         line-height: 45px;
     }
     .number {
-        font-size: 70px;
+        font-size: 67px;
         line-height: 90px;
     }
 }
@@ -124,7 +120,7 @@ h3 {
     h3 {
         font-style: normal;
         font-weight: bold;
-        font-size: 35.8807px;
+        font-size: 32px;
         line-height: 43px;
     }
     img {
@@ -132,19 +128,16 @@ h3 {
     }
     .container {
         padding: 0 30px;
-        /*height: 100%;*/
     }
     .table-wrap{
         position: relative;
         margin-top: 80px;
         background: url("../img/line_mob.svg") 70% 0% no-repeat, url("../img/line_mob.svg") 70% 100% no-repeat;
-        /*flex-direction: column;*/
         flex-wrap: wrap;
     }
     .table {
         width: 50%;
         background: none;
-        text-align: left;
     }
     .table h4{
         font-size: 30px;
@@ -153,9 +146,6 @@ h3 {
     .number {
         font-size: 80px;
         line-height: 80px;
-    }
-    .mt {
-        margin-top: 30px;
     }
 }
 
