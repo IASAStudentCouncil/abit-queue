@@ -50,6 +50,7 @@ h3 {
     background: url("../img/line.svg") 9% 0% no-repeat, url("../img/line.svg") 9% 100% no-repeat;
     /*border-top: 5px dashed #ffffff;*/
     /*border-bottom: 5px dashed #ffffff;*/
+    background-repeat: repeat-x !important;
     padding: 36px 0;
     justify-content: space-between;
 }
