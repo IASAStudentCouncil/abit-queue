@@ -17,7 +17,6 @@ export default new Vuex.Store({
     },
     async deletePersonFromQueue({}, {id}) {
       const person = await firebase.database().ref(`/queue/${id}`).set(null)
-      console.log(person)
     },
     async fetchQueue() {
       try {
