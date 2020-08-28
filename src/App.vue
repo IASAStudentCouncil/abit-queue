@@ -8,9 +8,10 @@
 <script>
 import Admin from '@/views/Admin'
 import Queue from '@/views/Queue'
+import AllQueue from '@/views/AllQueue'
 
 export default {
-  components:  { Admin, Queue },
+  components:  { Admin, Queue, AllQueue },
   data: () => ({
     queue: []
   }),

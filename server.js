@@ -7,7 +7,7 @@ const app = express()
 
 
 
-app.set('port', 3000)
+app.set('port', 8080)
 
 app.listen(app.get('port'), () => {
     console.log(`[OK] Server is running on localhost:${app.get('port')}`)
@@ -99,6 +99,7 @@ app.get('/api/reg/', (req, res) => {
 
 app.use('/', express.static(path.join('./dist')))
 app.use('/admin', express.static(path.join('./dist')))
+app.use('/queue', express.static(path.join('./dist')))
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
   next()

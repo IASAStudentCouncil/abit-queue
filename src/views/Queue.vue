@@ -4,7 +4,9 @@
             <h3>IASA</h3>
             <img src="img/logo.svg">
         </div>
-
+        <div class="link-wrap">
+            <router-link to="/queue">Подивитися всю чергу</router-link>
+        </div>
         <div class="table-wrap">
             <div 
                 class="table"
