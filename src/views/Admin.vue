@@ -10,7 +10,7 @@
                 </form>
             </div>
         </div>
-        <div v-else>
+        <div class="allowed" v-else>
             <div class="queue">
                 <p
                     v-for="q of queue"
@@ -19,24 +19,51 @@
                     {{q}}
                 </p>
             </div>
-            <form @submit.prevent="addPersonHandler">
-                <label for="add">Add person number...</label>
-                <input 
-                    type="number" 
-                    id="add"
-                    v-model="numToAdd"
-                >
-                <button type="submit">Add</button>
-            </form>
-            <form @submit.prevent="deletePersonHandler">
-                <label for="delete">Delete person number...</label>
-                <input 
-                    type="number" 
-                    id="delete"
-                    v-model="numToDel"
-                >
-                <button type="submit">Delete</button>
-            </form>
+            <div class="forms">
+                <form @submit.prevent="addPersonHandler">
+                    <label for="add">Add person number...</label>
+                    <input 
+                        type="number" 
+                        id="add"
+                        v-model="numToAdd"
+                    >
+                    <button type="submit">Add</button>
+                </form>
+                <form @submit.prevent="deletePersonHandler">
+                    <label for="delete">Delete person number...</label>
+                    <input 
+                        type="number" 
+                        id="delete"
+                        v-model="numToDel"
+                    >
+                    <button type="submit">Delete</button>
+                </form>
+                <form @submit.prevent="swapPersonHandler">
+                    <label for="swap">Swap two persons number...</label>
+                    <input 
+                        type="number" 
+                        id="swap"
+                        placeholder="first person"
+                        v-model="firstSwap"
+                    >
+                    <input 
+                        type="number" 
+                        id="swap1"
+                        placeholder="second person"
+                        v-model="secondSwap"
+                    >
+                    <button type="submit">Swap</button>
+                </form>
+                <form @submit.prevent="freezePersonHandler">
+                    <label for="pos">-15 positions for person number...</label>
+                    <input 
+                        type="number" 
+                        id="pos"
+                        v-model="numToFreeze"
+                    >
+                    <button type="submit">-15</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -44,6 +71,20 @@
 <style>
     .admin{
         color: black !important;
+        padding-left: 100px;
+    }
+
+    .allowed {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .queue {
+        margin-right: 50px;
+    }
+
+    form {
+        margin-top: 30px;
     }
 </style>
 
@@ -55,6 +96,9 @@ export default {
         allowed: false,
         numToAdd: 0,
         numToDel: 0,
+        firstSwap: 0,
+        secondSwap: 0,
+        numToFreeze: 0,
         pass: '',
         login: ''
     }),
@@ -64,6 +108,49 @@ export default {
         }, 3000)
     },
     methods: {
+        async freezePersonHandler() {
+            if(this.numToFreeze <= 0) {
+                this.numToFreeze = 0
+                return
+            } 
+
+            try {
+                const idx = this.queue.indexOf(parseInt(this.numToFreeze))
+                console.log(idx, 'index')
+                await this.$store.dispatch('freezePerson', { idx })
+                this.numToFreeze = 0
+                this.$emit('update')
+            } catch (e) {
+                 this.numToFreeze = 0
+                 throw e
+            }
+        },
+        async swapPersonHandler() {
+            if(this.firstSwap <= 0 || this.secondSwap <= 0) {
+                this.firstSwap = 0
+                this.secondSwap = 0
+                return
+            } else if (this.firstSwap > this.queue.length || this.secondSwap > this.queue.length) {
+                this.firstSwap = 0
+                this.secondSwap = 0
+                return
+            }
+
+            try {
+                const swapData = {
+                    first: this.firstSwap,
+                    second: this.secondSwap
+                }
+                await this.$store.dispatch('swapPersons', swapData)
+                this.firstSwap = 0
+                this.secondSwap = 0
+                this.$emit('update')
+            } catch (e) {
+                this.firstSwap = 0
+                this.secondSwap = 0
+                throw e
+            }
+        },
         async tryToLogin() {
             console.log("try to login")
             const formData = {
