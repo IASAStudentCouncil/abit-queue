@@ -62,7 +62,7 @@ h3 {
 
 .table-wrap {
     position: relative;
-    margin-top: 120px;
+    margin-top: 20px;
     display:flex;
     /*justify-content: space-evenly;*/
     background: url("../img/line.svg") 9% 0% no-repeat, url("../img/line.svg") 9% 100% no-repeat;

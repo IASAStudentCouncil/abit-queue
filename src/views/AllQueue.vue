@@ -4,24 +4,22 @@
         <div class="link-wrap">
             <router-link to="/">Головна</router-link>
         </div>
-        <div class="queue">
+        <div class="queue-wr">
             <p 
                 class="num"
-                v-for="q of queue"
+                v-for="(q, i) of queue"
                 :key="q"
             >
-                {{ q | number(q) }}
+               {{i + 1}}. {{ q | number(q) }}
             </p>
         </div>
     </div>
 </template>
 
 <style scoped>
-    .queue {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-around;
+
+    p:nth-child(4) {
+        color: #FBD130;
     }
 
     h1 {
@@ -29,9 +27,7 @@
     }
 
     p {
-        margin: 15px 30px;
-        font-size: 26px;
-        width: 45px;
+        margin-top: 15px;
     }
 
     h1, p {
