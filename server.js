@@ -7,7 +7,7 @@ const app = express()
 
 
 
-app.set('port', 3000)
+app.set('port', 8080)
 
 app.listen(app.get('port'), () => {
     console.log(`[OK] Server is running on localhost:${app.get('port')}`)
