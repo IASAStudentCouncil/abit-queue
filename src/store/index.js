@@ -12,6 +12,18 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
+    async fetchTime() {
+      const min = JSON.parse(await axios.get('api/time')).res
+      return min
+    },
+    async freezePerson({}, {idx}) {
+      axios
+      .get(`/api/queue-freeze/?idx=${idx}`)
+    },
+    async swapPersons({}, {first, second}) {
+      axios
+      .get(`/api/queue-swap/?first=${first}&second=${second}`)
+    },
     async addPersonToQueue({}, { number }) {
         axios
         .get(`/api/queue-add/?num=${number}`)

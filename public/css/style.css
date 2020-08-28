@@ -10,6 +10,10 @@
   padding: 0px;
 }
 
+#app {
+    min-height: 100vh;
+}
+
 html {
   overflow-x: hidden;
   font-weight: 400;
@@ -24,7 +28,7 @@ body {
 }
 
 .container {
-    height: 100vh;
+    min-height: 100vh;
     padding: 0 13%;
     background-color: #1D1D1D;
 }
@@ -32,6 +36,20 @@ body {
 h3 {
     font-size: 58.522px;
     line-height: 70px;
+}
+
+.link-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.link-wrap a {
+    text-decoration: none;
+    color: #FBD130;
+}
+
+.link-wrap:hover a {
+    text-decoration: underline;
 }
 
 .logo-wrap {
@@ -44,7 +62,7 @@ h3 {
 
 .table-wrap {
     position: relative;
-    margin-top: 120px;
+    margin-top: 20px;
     display:flex;
     /*justify-content: space-evenly;*/
     background: url("../img/line.svg") 9% 0% no-repeat, url("../img/line.svg") 9% 100% no-repeat;

@@ -13,6 +13,11 @@ Vue.use(VueRouter)
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin.vue')
+  },
+  {
+    path: '/queue',
+    name: 'AllQueue',
+    component: () => import('../views/AllQueue.vue')
   }
 ]
 

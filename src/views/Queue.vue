@@ -4,7 +4,9 @@
             <h3>IASA</h3>
             <img src="img/logo.svg">
         </div>
-
+        <div class="link-wrap">
+            <router-link to="/queue">Подивитися всю чергу</router-link>
+        </div>
         <div class="table-wrap">
             <div 
                 class="table"
@@ -19,6 +21,12 @@
                 <p class="number">{{next | number(next)}}</p>
             </div>
         </div>
+        <div class="time">
+            <p>Середній час обробки: {{ avgTime }} хвилин</p>
+        </div>
+        <div class="audio">
+            <audio constrols ref="music" src="../audio/a.mp3"></audio>
+        </div>
     </div>
 </template>
 
@@ -26,6 +34,9 @@
 export default {
     name: 'Queue',
     props: ['queue'],
+    data: () => ({
+        avgTime: 0
+    }),
     computed: {
         que() {
             return this.queue.slice(0, 3)
@@ -35,9 +46,16 @@ export default {
         }
     },
     mounted() {
-        setInterval(() => {
+        setInterval(async () => {
             this.$emit('update')
+            this.avgTime = await this.$store.dispatch('fetchTime')
         }, 3000)
+    },
+    watch: {
+        next(val, old) {
+            console.log('changed')
+            this.$refs.music.play()
+        } 
     }
 }
 </script>

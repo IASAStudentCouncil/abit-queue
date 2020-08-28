@@ -37,7 +37,7 @@ app.post('/api/queue/', (req, res) => {
         } else {
             arr.push(arr[arr.length - 1] + 1)
         }
-        console.log(arr)
+      //  console.log(arr)
         res.send(`${arr[arr.length - 1]}`)
     } catch (error) {
         throw error
@@ -97,8 +97,41 @@ app.get('/api/reg/', (req, res) => {
     
 })
 
+app.get('/api/queue-swap/', (req, res) => {
+    try {
+        if(arr.length === 1) {
+            res.send('1')
+        } else {
+            const f = arr.indexOf(parseInt(req.query.first))
+            const s = arr.indexOf(parseInt(req.query.second))
+            arr.splice(f, 1, arr.splice(s, 1, arr[f])[0])
+            res.send('ok')
+        }
+    } catch (e) {
+        throw e
+    }
+})
+
+app.get('/api/queue-freeze/', (req, res) => {
+    try {
+        const i = parseInt(req.query.idx)
+        /*start count item*/
+        const el = arr[i]
+        arr.splice(i, 1) //delete one at index i
+        if((i + 14) >= arr.length) {
+            arr.push(el)
+        } else {
+            arr.splice(i + 14, 0, el) 
+        }
+        res.send('ok')
+    } catch (e) {
+        throw e
+    }
+})
+
 app.use('/', express.static(path.join('./dist')))
 app.use('/admin', express.static(path.join('./dist')))
+app.use('/queue', express.static(path.join('./dist')))
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private')
   next()
