@@ -14,7 +14,9 @@ export default new Vuex.Store({
   actions: {
     async fetchTime() {
       const min = (await axios.get('api/time')).data.res
-      console.log(min)
+      if (isNaN(min)) {
+        return 1
+      }
       return min
     },
     async freezePerson({}, {idx}) {

@@ -14,7 +14,7 @@ app.listen(app.get('port'), () => {
 });
 
 let arr = []  /*?????????????????*/ 
-let eta = [600000]
+let eta = []
 let time = Date.now()
 
 app.get('/api/queue/', (req, res) => {
