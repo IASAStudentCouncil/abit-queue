@@ -14,6 +14,8 @@ app.listen(app.get('port'), () => {
 });
 
 let arr = []  /*?????????????????*/ 
+let eta = []
+let time = Date.now()
 
 app.get('/api/queue/', (req, res) => {
     try {
@@ -68,6 +70,16 @@ app.get('/api/queue-del/', (req, res) => {
             }
         }  
         console.log(arr)
+		if (eta.length == 0){
+			time = Date.now()
+		}
+		if (eta.length < 10){
+			eta.push(Date.now() - time)
+		} else {
+			eta.shift()
+			eta.push(Date.now() - time)
+		}
+		time = Date.now()
         res.send(`${arr}`)
     } catch (error) {
         throw error
@@ -118,12 +130,32 @@ app.get('/api/queue-freeze/', (req, res) => {
         /*start count item*/
         const el = arr[i]
         arr.splice(i, 1) //delete one at index i
-        if((i + 14) >= arr.length) {
+        if((i + 4) >= arr.length) {
             arr.push(el)
         } else {
-            arr.splice(i + 14, 0, el) 
+            arr.splice(i + 4, 0, el) 
         }
         res.send('ok')
+    } catch (e) {
+        throw e
+    }
+})
+
+app.get('/api/time/', (req, res) => {
+    try {
+		console.log(eta)
+        let avg_eta = eta.reduce((a, b) => a + b, 0)
+		avg_eta = Math.ceil(avg_eta / 60000)
+        res.send("{"+`"res": "${avg_eta}"`+"}")
+    } catch (e) {
+        throw e
+    }
+})
+
+app.get('/api/queue-set/', (req, res) => {
+    try {
+		arr = JSON.parse(req.query.queue)
+        res.send("ok")
     } catch (e) {
         throw e
     }
