@@ -55,13 +55,13 @@
                     <button type="submit">Swap</button>
                 </form>
                 <form @submit.prevent="freezePersonHandler">
-                    <label for="pos">-15 positions for person number...</label>
+                    <label for="pos">-5 positions for person number...</label>
                     <input 
                         type="number" 
                         id="pos"
                         v-model="numToFreeze"
                     >
-                    <button type="submit">-15</button>
+                    <button type="submit">-5</button>
                 </form>
             </div>
         </div>

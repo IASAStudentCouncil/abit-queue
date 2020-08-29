@@ -18,10 +18,6 @@
 
 <style scoped>
 
-    p:nth-child(4) {
-        color: #FBD130;
-    }
-
     h1 {
         margin-bottom: 30px;
     }

@@ -22,13 +22,32 @@
             </div>
         </div>
         <div class="time">
-            <p>Середній час обробки: {{ avgTime }} хвилин</p>
+            <p>Середній час обробки</p>
+            <p class="mins">{{ avgTime }} хв.</p>
         </div>
         <div class="audio">
             <audio constrols ref="music" src="../audio/a.mp3"></audio>
         </div>
     </div>
 </template>
+
+<style scoped>
+    .time p {
+        font-size: 59px;
+        line-height: 71px;
+        text-align: center;
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    .time p.mins {
+        font-size: 64px;
+        line-height: 77px;
+        text-align: center;
+        text-transform: none;
+        color: #FBD130;
+    }
+</style>
 
 <script>
 export default {

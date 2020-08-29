@@ -14,7 +14,7 @@ app.listen(app.get('port'), () => {
 });
 
 let arr = []  /*?????????????????*/ 
-let eta = []
+let eta = [600000]
 let time = Date.now()
 
 app.get('/api/queue/', (req, res) => {
@@ -64,21 +64,18 @@ app.get('/api/queue-del/', (req, res) => {
     try {
         if(arr.includes(parseInt(req.query.num))){
             let index = arr.indexOf(parseInt(req.query.num))
-            console.log(index)
             if (index > -1) {
                 arr.splice(index, 1)
+            } 
+            if(index < 3) {
+                if (eta.length < 10){
+                    eta.push(Date.now() - time)
+                } else {
+                    eta.shift()
+                    eta.push(Date.now() - time)
+                }
             }
         }  
-        console.log(arr)
-		if (eta.length == 0){
-			time = Date.now()
-		}
-		if (eta.length < 10){
-			eta.push(Date.now() - time)
-		} else {
-			eta.shift()
-			eta.push(Date.now() - time)
-		}
 		time = Date.now()
         res.send(`${arr}`)
     } catch (error) {
@@ -145,7 +142,7 @@ app.get('/api/time/', (req, res) => {
     try {
 		console.log(eta)
         let avg_eta = eta.reduce((a, b) => a + b, 0)
-		avg_eta = Math.ceil(avg_eta / 60000)
+		avg_eta = Math.ceil(avg_eta / (60000*eta.length))
         res.send("{"+`"res": "${avg_eta}"`+"}")
     } catch (e) {
         throw e

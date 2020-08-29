@@ -13,7 +13,8 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchTime() {
-      const min = JSON.parse(await axios.get('api/time')).res
+      const min = (await axios.get('api/time')).data.res
+      console.log(min)
       return min
     },
     async freezePerson({}, {idx}) {
